@@ -14,29 +14,56 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Star Wars Characters (DATA)
+// Initial individual profile data for MyCoffeemate
 // =============================================================
-var characters = [
+var profiles = [
   {
-    routeName: "yoda",
-    name: "Yoda",
-    role: "Jedi Master",
-    age: 900,
-    forcePoints: 2000
+    "name":"Elon Musk",
+    "photo":"https://amp.businessinsider.com/images/59f8d02cbcf93d46628b591c-750-500.jpg",
+    "scores":[
+        5,
+        1,
+        4,
+        4,
+        5,
+        1,
+        2,
+        5,
+        4,
+        1
+      ]
   },
   {
-    routeName: "darthmaul",
-    name: "Darth Maul",
-    role: "Sith Lord",
-    age: 200,
-    forcePoints: 1200
+    "name":"Mark Zuckerberg",
+    "photo":"https://cnet3.cbsistatic.com/img/pQWoXJ7cBNKcLeH-F4XYLdfqrIE=/970x0/2018/03/23/b2928724-8ca9-4aa6-92fe-fa97a42deb34/f8-facebook-mark-zuckerberg-0112.jpg",
+    "scores":[
+        5,
+        1,
+        4,
+        4,
+        5,
+        1,
+        2,
+        5,
+        4,
+        1
+      ]
   },
   {
-    routeName: "obiwankenobi",
-    name: "Obi Wan Kenobi",
-    role: "Jedi Master",
-    age: 55,
-    forcePoints: 1350
+    "name":"Sheryl Sandberg",
+    "photo":"https://specials-images.forbesimg.com/imageserve/5a8ef078a7ea431690141af5/416x416.jpg?background=000000&cropX1=1474&cropX2=3673&cropY1=407&cropY2=2605",
+    "scores":[
+        5,
+        1,
+        4,
+        4,
+        5,
+        1,
+        2,
+        5,
+        4,
+        1
+      ]
   }
 ];
 
@@ -56,41 +83,41 @@ app.get("/all", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Displays all characters
-app.get("/api/characters", function(req, res) {
-  return res.json(characters);
+// Displays all profiles
+app.get("/api/profiles", function(req, res) {
+  return res.json(profiles);
 });
 
-// Displays a single character, or returns false
-app.get("/api/characters/:character", function(req, res) {
-  var chosen = req.params.character;
+// Displays a single profile, or returns false
+app.get("/api/profiles/:profile", function(req, res) {
+  var chosen = req.params.profile;
 
   console.log(chosen);
 
-  for (var i = 0; i < characters.length; i++) {
-    if (chosen === characters[i].routeName) {
-      return res.json(characters[i]);
+  for (var i = 0; i < profiles.length; i++) {
+    if (chosen === profiles[i].routeName) {
+      return res.json(profiles[i]);
     }
   }
 
   return res.json(false);
 });
 
-// Create New Characters - takes in JSON input
-app.post("/api/characters", function(req, res) {
+// Create New profiles - takes in JSON input
+app.post("/api/profiles", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body-parser middleware
-  var newcharacter = req.body;
+  var newprofile = req.body;
 
-  // Using a RegEx Pattern to remove spaces from newCharacter
+  // Using a RegEx Pattern to remove spaces from newprofile
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+  newprofile.routeName = newprofile.name.replace(/\s+/g, "").toLowerCase();
 
-  console.log(newcharacter);
+  console.log(newprofile);
 
-  characters.push(newcharacter);
+  profiles.push(newprofile);
 
-  res.json(newcharacter);
+  res.json(newprofile);
 });
 
 // Starts the server to begin listening
