@@ -91,6 +91,21 @@ app.get("/api/friends", function(req, res) {
   return res.json(profiles);
 });
 
+// Displays a single profile, or returns false
+app.get("/api/friends/:friend", function(req, res) {
+  var chosen = req.params.friend;
+
+  console.log(chosen);
+
+  for (var i = 0; i < profiles.length; i++) {
+    if (chosen === profiles[i].routeName) {
+      return res.json(profiles[i]);
+    }
+  }
+
+  return res.json(false);
+});
+
 // Create new profiles - takes in JSON input
 app.post("/api/friends", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user

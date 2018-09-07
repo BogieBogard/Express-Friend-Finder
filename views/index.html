@@ -249,11 +249,9 @@
 				Submit</button>
 
 			<hr>
-			<footer class="footer">
-				<div class="container">
-					<p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
-				</div>
-			</footer>
+			<div class="container">
+				<p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/BogieBogard/Express-Friend-Finder">GitHubRepo</a></p>
+			</div>
 
 		</div>
 
@@ -266,7 +264,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
-					<h5 class="title"><b class="light-color">Follow me &copy; instagram</b></h5>
+					<h5 class="title"><b class="light-color"></b></h5>
 				</div><!-- col-lg-4 -->
 			</div><!-- row -->
 		</div><!-- container -->
@@ -335,16 +333,26 @@
 			$("#submit").on("click", function (event) {
 				event.preventDefault();
 				var userProfileEntry = {
-					name: $("#name").val().trim(),
-					photo: $("#photo").val().trim(),
-					q1: $("#q1").val().trim(),
-					q2: $("#q2").val().trim()
+
+					name: $("#name").val().trim()
+					// photo: $("#photo").val().trim(),
+					// q1: $("#q1").val().trim(),
+					// q2: $("#q2").val().trim()
 				};
-				$.post("/api/friends", userProfileEntry)
-					.then(function (data) {
-						console.log(data);
-						alert("Adding your profile information...");
-					});
+				if (profileLength > 4) {
+					alert("Testing");
+					$.post("/api/friends", userProfileEntry)
+						.then(function (data) {
+							console.log(data);
+							alert("Adding to waitlist...");
+						});
+				} else {
+					$.post("/api/friends", userProfileEntry)
+						.then(function (data) {
+							console.log(data);
+							alert("Adding reservation...");
+						});
+				};
 			});
 		});
 
