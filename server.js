@@ -10,6 +10,9 @@ var path = require("path");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+// Use the express.static middleware to serve static content for the app from the "images" directory in the application directory.
+app.use("/", express.static(path.join(__dirname, "images")));
+
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -73,51 +76,6 @@ var profiles = [
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
-});
-
-app.get("/add", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-app.get("/all", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-// Displays all profiles
-app.get("/api/profiles", function(req, res) {
-  return res.json(profiles);
-});
-
-// Displays a single profile, or returns false
-app.get("/api/profiles/:profile", function(req, res) {
-  var chosen = req.params.profile;
-
-  console.log(chosen);
-
-  for (var i = 0; i < profiles.length; i++) {
-    if (chosen === profiles[i].routeName) {
-      return res.json(profiles[i]);
-    }
-  }
-
-  return res.json(false);
-});
-
-// Create New profiles - takes in JSON input
-app.post("/api/profiles", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body-parser middleware
-  var newprofile = req.body;
-
-  // Using a RegEx Pattern to remove spaces from newprofile
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newprofile.routeName = newprofile.name.replace(/\s+/g, "").toLowerCase();
-
-  console.log(newprofile);
-
-  profiles.push(newprofile);
-
-  res.json(newprofile);
 });
 
 // Starts the server to begin listening
