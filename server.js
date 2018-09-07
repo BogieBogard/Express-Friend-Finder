@@ -1,17 +1,21 @@
 //Starting server.js - Solved server.js from 15-ExtendedApp
 // Dependencies
 // =============================================================
-var express = require("express");
-var bodyParser = require("body-parser");
-var path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Use the express.static middleware to serve static content for the app from the "images" directory in the application directory.
-app.use("/", express.static(path.join(__dirname, "images")));
+
+app.use("/", express.static(path.join(__dirname, "public")));
+// app.use("/", express.static(path.join(__dirname, "common-css")));
+// app.use("/", express.static(path.join(__dirname, "common-js")));
+// app.use("/", express.static(path.join(__dirname, "fonts")));
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +23,7 @@ app.use(bodyParser.json());
 
 // Initial individual profile data for MyCoffeemate
 // =============================================================
-var profiles = [
+let profiles = [
   {
     "name":"Elon Musk",
     "photo":"https://amp.businessinsider.com/images/59f8d02cbcf93d46628b591c-750-500.jpg",
@@ -75,11 +79,11 @@ var profiles = [
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "./views/index.html"));
 });
 
-// Starts the server to begin listening
-// =============================================================
+// Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
+  // Log (server-side) when our server has started
+  console.log("Server listening on: http://localhost:" + PORT);
 });
