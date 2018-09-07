@@ -319,5 +319,41 @@
 
 	<script src="./javascript/scripts.js"></script>
 
+<!-- Custom JS for the survey -->
+<script type="text/javascript">
+	$.get("/api/friends", function (data, status) {
+	  console.log(data);
+	  let profileLength = data.length;
+	  console.log(status);
+
+	  console.log(profileLength);
+
+	  $("#submit").on("click", function (event) {
+		event.preventDefault();
+		var newReservation = {
+		  name: $("#name").val().trim(),
+		  role: $("#role").val().trim(),
+		  age: $("#age").val().trim(),
+		  forcePoints: $("#force-points").val().trim()
+		};
+		if (tableLength > 4) {
+		  alert("There's no room for a table! But you'll be added to our waitlist.");
+		  $.post("/api/waitlist", newReservation)
+			.then(function (data) {
+			  console.log(data);
+			  alert("Adding to waitlist...");
+			});
+		} else {
+		  $.post("/api/tables", newReservation)
+			.then(function (data) {
+			  console.log(data);
+			  alert("Adding reservation...");
+			});
+		};
+	  });
+	});
+
+  </script>
+
 </body>
 </html>
