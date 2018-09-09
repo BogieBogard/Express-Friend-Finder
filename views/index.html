@@ -321,43 +321,6 @@
 
 	<script src="./javascript/scripts.js"></script>
 
-	<!-- Custom JS for the survey -->
-	<script type="text/javascript">
-		$.get("/api/friends", function (data, status) {
-			console.log(data);
-			let profileLength = data.length;
-			console.log(status);
-
-			console.log(profileLength);
-
-			$("#submit").on("click", function (event) {
-				event.preventDefault();
-				var userProfileEntry = {
-
-					name: $("#name").val().trim()
-					// photo: $("#photo").val().trim(),
-					// q1: $("#q1").val().trim(),
-					// q2: $("#q2").val().trim()
-				};
-				if (profileLength > 4) {
-					alert("Testing");
-					$.post("/api/friends", userProfileEntry)
-						.then(function (data) {
-							console.log(data);
-							alert("Adding to waitlist...");
-						});
-				} else {
-					$.post("/api/friends", userProfileEntry)
-						.then(function (data) {
-							console.log(data);
-							alert("Adding reservation...");
-						});
-				};
-			});
-		});
-
-	</script>
-
 </body>
 
 </html>
